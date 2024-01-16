@@ -61,4 +61,4 @@ class DATA:
         for col in (self.cols.y if cols is None else [self.cols.names[c] for c in cols]):
             u[col.txt] = round(getattr(col, fun or "mid")(), ndivs) if ndivs else getattr(col, fun or "mid")()
             print(u[col.txt])
-        return u
+        return {**u,**self.cols.names}
