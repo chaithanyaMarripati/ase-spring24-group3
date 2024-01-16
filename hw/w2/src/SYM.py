@@ -32,12 +32,4 @@ class SYM:
 
     def like(self, x, prior, the):
         return ((self.has.get(x, 0) + the.m * prior) / (self.n + the.m))
-    
 
-the_SYM = SYM()
-the_SYM.add("A")
-the_SYM.add("B")
-the_SYM.add("A")
-print("Mode for SYM:", the_SYM.mid())
-print("Entropy for SYM:", the_SYM.div())
-print("Likelihood for value 'A' with prior 0.5 for SYM:", the_SYM.like("A", 0.5, the_SYM))

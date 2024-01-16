@@ -36,9 +36,4 @@ class NUM:
         denom = sd * 2.5 + 1E-30
         return nom / denom
 
-the_NUM = NUM()
-the_NUM.add(10)
-the_NUM.add(15)
-print("Mean for NUM:", the_NUM.mid())
-print("Standard Deviation for NUM:", the_NUM.div())
-print("Likelihood for value 12 for NUM:", the_NUM.like(12, the_NUM))
+

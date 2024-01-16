@@ -34,21 +34,3 @@ class ROW:
                 out += math.log(inc)
         return math.exp(1)**out
 
-
-# Example usage:
-the_data = {"1": 10, "2": 15, "3": "?"}  # Example data for ROW instance
-the = ROW(the_data)
-datas = {
-    "data1": {
-        "cols": {"x": {1: NUM(), 2: NUM()}, "y": {3: NUM()}},
-        "rows": [
-            {"1": 10, "2": 15, "3": "?"}, 
-            {"1": 12, "2": 18, "3": "?"}
-        ]
-    }
-}
-
-result = the.likes(datas)
-print("Best data:", result[0])
-print("Likelihood:", result[1])
-

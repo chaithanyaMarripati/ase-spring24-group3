@@ -36,7 +36,7 @@ class DATA:
                 self.add(x, fun)
 
     def add(self, t, fun=None):
-        row = t.cells if t.cells else ROW(t)
+        row = t.cells if 'cells' in t else ROW(t)
         if self.cols:
             if fun:
                 fun(self, row)
@@ -60,4 +60,5 @@ class DATA:
         u = {".N": len(self.rows)}
         for col in (self.cols.y if cols is None else [self.cols.names[c] for c in cols]):
             u[col.txt] = round(getattr(col, fun or "mid")(), ndivs) if ndivs else getattr(col, fun or "mid")()
+            print(u[col.txt])
         return u

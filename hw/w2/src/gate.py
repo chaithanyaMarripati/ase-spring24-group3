@@ -6,10 +6,11 @@ OPTIONS:
 
 
 import sys
+from DATA import DATA
 
 for arg in sys.argv:
     if arg in ["-h","--help"]:
         print(__doc__)
         exit(0)
-
-print("Need to implement stuff")
+data= DATA("../data/auto93.csv")
+print(data.stats())
