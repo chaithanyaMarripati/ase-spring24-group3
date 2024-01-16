@@ -1,5 +1,4 @@
 import math
-from NUM import NUM
 class ROW:
     k = 1 
     def __init__(self, t):
