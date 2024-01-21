@@ -3,11 +3,8 @@ OPTIONS:
   -f --file   csv file containing data        = '../data/auto93.csv'
   -h --help   show help                       = False
 """
-
-
 import sys
-from DATA import DATA
-
+from src.DATA import DATA
 for arg in sys.argv:
     if arg in ["-h","--help"]:
         print(__doc__)

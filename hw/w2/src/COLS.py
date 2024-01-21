@@ -22,5 +22,3 @@ class COLS:
             for col in cols:
                 col.add(row.cells[col.at])
         return row
-
-

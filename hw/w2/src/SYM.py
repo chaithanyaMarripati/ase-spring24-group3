@@ -7,18 +7,18 @@ class SYM:
         self.txt = s or " "
         self.at = n or 0
         self.n = 0
-        self.has = {}
-        self.mode = None
-        self.most = 0
+        self.has = {} #this is a dictionary to keep track of the frequencies of the symbols
+        self.mode = None #this is the symbol which repeats the most
+        self.most = 0 #this is the frequency of the most repeating symbol
     
     def add(self, x):
         if x != "?":
             self.n += 1
-            self.has[x] = 1 + (self.has[x] if x in self.has else 0)
+            self.has[x] = 1+self.has.get(x,0)
             if self.has[x] > self.most:
                 self.most, self.mode = self.has[x], x
 
-    def mid(self):
+    def mid(self): #mid for symbols is mode itself
         return self.mode
     
     def div(self):
