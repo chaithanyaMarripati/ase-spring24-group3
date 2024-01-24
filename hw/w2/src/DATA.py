@@ -1,8 +1,7 @@
 from collections import namedtuple
 import csv
-
-from SYM import SYM
-from NUM import NUM
+from src.SYM import SYM
+from src.NUM import NUM
 
 ROW = namedtuple('ROW', 'cells')
 
