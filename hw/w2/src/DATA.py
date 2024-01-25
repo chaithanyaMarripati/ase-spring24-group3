@@ -34,5 +34,4 @@ class DATA:
         for col in (self.cols.y if cols is None else [self.cols.names[c] for c in cols]):
             current_col= self.cols.all[col]
             u[current_col.txt] = round(getattr(current_col, fun or "mid")(), ndivs) if ndivs else getattr(current_col, fun or "mid")()
-            print(u[current_col.txt],round(u[current_col.txt]))
         return u
