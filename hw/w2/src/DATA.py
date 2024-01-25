@@ -1,25 +1,12 @@
 from src.COLS import COLS
 from src.ROW import ROW
-import csv,ast
-
-def coerce(x):
-   try : return ast.literal_eval(x)
-   except Exception: return x.strip()
-
+from src.utils import csv
 class DATA:
     def __init__(self, src):
         self.rows, self.cols = [], None
         if isinstance(src,str) == False:
             raise Exception("Data source should be a string")
-        
-        with open(src, 'r') as file:
-            csv_reader = csv.DictReader(file)
-            self.add(csv_reader.fieldnames)
-            for row in csv_reader:
-                rowValues = []
-                for a in row.values():
-                    rowValues.append(coerce(a))
-                self.add(rowValues)
+        csv(src,self.add)
 
     def add(self, r, fun=None):
         row =r if 'cells' in r else ROW(r)
@@ -47,4 +34,5 @@ class DATA:
         for col in (self.cols.y if cols is None else [self.cols.names[c] for c in cols]):
             current_col= self.cols.all[col]
             u[current_col.txt] = round(getattr(current_col, fun or "mid")(), ndivs) if ndivs else getattr(current_col, fun or "mid")()
+            print(u[current_col.txt],round(u[current_col.txt]))
         return u
