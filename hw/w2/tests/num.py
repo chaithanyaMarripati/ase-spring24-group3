@@ -1,5 +1,4 @@
-from ..src.NUM import NUM
-
+from src.NUM import NUM
 def test():
     # testcase 0
     num = NUM()
