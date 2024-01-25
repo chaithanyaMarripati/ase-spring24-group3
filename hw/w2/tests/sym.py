@@ -1,7 +1,7 @@
 from src.SYM import SYM
 def test():
     #testcase 0
-    sym =SYM();
+    sym =SYM()
     assert sym.mid() == None
     assert sym.most == 0
     assert sym.m == 0
