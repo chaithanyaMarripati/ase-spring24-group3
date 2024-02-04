@@ -1,17 +1,18 @@
-from src.COLS import COLS
-from src.ROW import ROW
-from src.utils import csv
+from COLS import COLS
+from ROW import ROW
+from utils import csv
 
 
 class DATA:
-    def __init__(self, src):
+    def __init__(self, src,fun=None):
         self.rows, self.cols = [], None
-        if isinstance(src,str) == False:
-            raise Exception("Data source should be a string")
-        csv(src,self.add)
+        if isinstance(src,str):
+            csv(src,self.add)
+        else:
+            self.add(src,fun)
 
     def add(self, r, fun=None):
-        row =r if 'cells' in r else ROW(r)
+        row =r if isinstance(r,ROW) and r.cells else ROW(r)
         if self.cols:
             if fun:
                 fun(self, row)

@@ -14,23 +14,24 @@ class ROW:
     def likes(self, datas):
         n, nHypotheses = 0, 0
         for k, data in datas.items():
-            n += len(data.get("rows", []))
+            n += len(data.rows)
             nHypotheses += 1
         most, out = None, None
         for k, data in datas.items():
             tmp = self.like(data, n, nHypotheses)
             if most is None or tmp > most:
                 most, out = tmp, k
-        return out, most
+        return out
 
     def like(self, data, n, nHypotheses):
-        prior = (len(data.get("rows", [])) + self.k) / (n + self.k * nHypotheses)
+        prior = (len(data.rows) + self.k) / (n + self.k * nHypotheses)
         out = math.log(prior)
-        for _, col in data["cols"]["x"].items():
-            v= self.cells[col.at]
+        for col in data.cols.x:
+            v= self.cells[col]
+            currentCOL = data.cols.all[col]
             if v == '?':
                 continue
-            inc = col.like(v,prior)
+            inc = currentCOL.like(v,prior)
             try:
                 out+=math.log(inc)
             except ValueError:

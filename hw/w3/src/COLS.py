@@ -5,7 +5,7 @@ class COLS:
     def __init__(self, row):
         self.x, self.y, self.all = {}, {}, []
         self.klass, col = None, None
-        for at, txt in row.cells.items():
+        for at, txt in enumerate(row.cells):
             col = (NUM if txt[0].isupper() else SYM)(txt,at)  # Instantiate NUM or SYM directly
             self.all.append(col)
             # this is guard statement for the txt ending with X

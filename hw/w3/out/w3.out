@@ -1,0 +1,54 @@
+******************************
+
+
+TASK 1
+-----------------
+diabetes dataset
+     Class         	    Percentage   
+------------------ 	 ----------------
+positive                  	 34.90%
+negative                  	 65.10%
+-----------------
+soyabeans dataset
+     Class         	    Percentage   
+------------------ 	 ----------------
+diaporthe-stem-canker     	 2.93%
+charcoal-rot              	 2.93%
+rhizoctonia-root-rot      	 2.93%
+phytophthora-rot          	 12.88%
+brown-stem-rot            	 6.44%
+powdery-mildew            	 2.93%
+downy-mildew              	 2.93%
+brown-spot                	 13.47%
+bacterial-blight          	 2.93%
+bacterial-pustule         	 2.93%
+purple-seed-stain         	 2.93%
+anthracnose               	 6.44%
+phyllosticta-leaf-spot    	 2.93%
+alternarialeaf-spot       	 13.32%
+frog-eye-leaf-spot        	 13.32%
+diaporthe-pod-&-stem-blight 	 2.20%
+cyst-nematode             	 2.05%
+2-4-d-injury              	 2.34%
+herbicide-injury          	 1.17%
+******************************
+
+
+TASK 3
+diabetes accuracy 0.7335092348284961
+******************************
+
+
+TASK 4
+for the values of k 0 and values m 1, accuracy is 0.8454680534918276
+for the values of k 0 and values m 2, accuracy is 0.8142644873699851
+for the values of k 0 and values m 3, accuracy is 0.7845468053491828
+for the values of k 1 and values m 1, accuracy is 0.8454680534918276
+for the values of k 1 and values m 2, accuracy is 0.8142644873699851
+for the values of k 1 and values m 3, accuracy is 0.7845468053491828
+for the values of k 2 and values m 1, accuracy is 0.8454680534918276
+for the values of k 2 and values m 2, accuracy is 0.8142644873699851
+for the values of k 2 and values m 3, accuracy is 0.7845468053491828
+for the values of k 3 and values m 1, accuracy is 0.8454680534918276
+for the values of k 3 and values m 2, accuracy is 0.8142644873699851
+for the values of k 3 and values m 3, accuracy is 0.7845468053491828
