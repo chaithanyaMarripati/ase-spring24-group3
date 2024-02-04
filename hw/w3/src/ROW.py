@@ -27,9 +27,13 @@ class ROW:
         prior = (len(data.get("rows", [])) + self.k) / (n + self.k * nHypotheses)
         out = math.log(prior)
         for _, col in data["cols"]["x"].items():
-            v = self.cells.get(col.at, "?")  # Use get method to handle missing keys
-            if v != "?":
-                inc = col.like(v, prior)
-                out += math.log(inc)
+            v= self.cells[col.at]
+            if v == '?':
+                continue
+            inc = col.like(v,prior)
+            try:
+                out+=math.log(inc)
+            except ValueError:
+                return 0.0
         return math.exp(1)**out
 
