@@ -1,6 +1,7 @@
 from DATA import DATA
 from config import *
 
+
 def print_task1(data):
     class_counts = {}
     total_rows = len(data.rows)
@@ -15,12 +16,14 @@ def print_task1(data):
         percentage = (count / total_rows) * 100
         print(f"{class_label.ljust(25)} \t {percentage:.2f}%")
 
+
 def bayes(path):
-    wme = {'acc': 0, 'datas': {}, 'tries': 0, 'n': 0}
+    wme = {"acc": 0, "datas": {}, "tries": 0, "n": 0}
     data = DATA(path)
     for row in data.rows:
         learn(data, row, wme)
-    return wme['acc'] / wme['tries']
+    return wme["acc"] / wme["tries"]
+
 
 def learn(data, row, my):
     my["n"] += 1
@@ -35,7 +38,7 @@ def learn(data, row, my):
 
 
 if __name__ == "__main__":
-    data = DATA('../data/diabetes.csv')
+    data = DATA("../data/diabetes.csv")
     print("******************************")
     print("\n\nTASK 1")
     print("-----------------")
@@ -43,21 +46,23 @@ if __name__ == "__main__":
     print_task1(data)
     data = DATA("../data/soybean.csv")
     print("-----------------")
-    print('soyabeans dataset')
+    print("soyabeans dataset")
     print_task1(data)
 
     print("******************************")
     print("\n\nTASK 3")
-    accuracyFromDiabetes = bayes('../data/diabetes.csv')
-    print("diabetes accuracy",accuracyFromDiabetes)
+    accuracyFromDiabetes = bayes("../data/diabetes.csv")
+    print("diabetes accuracy", accuracyFromDiabetes)
 
     print("******************************")
     print("\n\nTASK 4")
-    path = '../data/soybean.csv'
+    path = "../data/soybean.csv"
 
     for k in range(4):
-        for m in range(1,4):
-            the['k'] = k
-            the['m'] = m
+        for m in range(1, 4):
+            the["k"] = k
+            the["m"] = m
             accuracyFromSoya = bayes(path)
-            print(f"for the values of k {k} and values m {m}, accuracy is {accuracyFromSoya}")
+            print(
+                f"for the values of k {k} and values m {m}, accuracy is {accuracyFromSoya}"
+            )
