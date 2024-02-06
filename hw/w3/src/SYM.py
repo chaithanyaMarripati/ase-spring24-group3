@@ -32,4 +32,3 @@ class SYM:
 
     def like(self, x, prior, the):
         return ((self.has.get(x, 0) + the.m * prior) / (self.n + the.m))
-

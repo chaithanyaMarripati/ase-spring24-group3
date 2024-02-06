@@ -31,5 +31,5 @@ class ROW:
             if v != "?":
                 inc = col.like(v, prior)
                 out += math.log(inc)
-        return math.exp(1)**out
+        return math.exp(1)**out 
 
