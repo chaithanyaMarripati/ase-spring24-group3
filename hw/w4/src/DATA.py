@@ -1,37 +1,59 @@
-from src.COLS import COLS
-from src.ROW import ROW
-from src.utils import csv
+import math
+from COLS import COLS
+from ROW import ROW
+import random
 class DATA:
-    def __init__(self, src):
-        self.rows, self.cols = [], None
-        if isinstance(src,str) == False:
-            raise Exception("Data source should be a string")
-        csv(src,self.add)
+    def __init__(self, rows):
+        self.rows = [ROW(row) for row in rows]
+        self.cols = {'x': [], 'y': []}  
+        self.cols['x'] = [0, 1, 2]  
+        self.cols['y'] = [3] 
 
-    def add(self, r, fun=None):
-        row =r if 'cells' in r else ROW(r)
-        if self.cols:
-            if fun:
-                fun(self, row)
-            self.rows.append(self.cols.add(row))
+    def add(self, row):
+        if not self.cols:
+            self.cols = COLS(row.cells)
         else:
-            self.cols = COLS(row)
+            self.rows.append(row)
 
-    def mid(self, cols=None):
-        u = [col.mid() for col in (cols or self.cols.all)]
-        return ROW(u)
+    def bestRest(self, rows, want):
+        sorted_rows = sorted(rows, key=lambda row: row.d2h(self))
+        return sorted_rows[:want], sorted_rows[want:]
 
-    def div(self, cols=None):
-        u = [col.div() for col in (cols or self.cols.all)]
-        return ROW(u)
+    def gate(self, budget0, budget, some):        
+        shuffled_rows = random.sample(self.rows, len(self.rows))
+        results = {"print1": [], "print2": [], "print3": [], "print4": [], "print5": [], "print6": []}
 
-    def small(self):
-        u = [col.small() for col in self.cols.all]
-        return ROW(u)
+        for row in shuffled_rows[:6]:
+            results["print1"].append([row.values[5], row.values[6], row.values[7]])  # Assuming indices 4, 5, 6
 
-    def stats(self, cols=None, fun=None, ndivs=None):
-        u = {".N": len(self.rows)}
-        for col in (self.cols.y if cols is None else [self.cols.names[c] for c in cols]):
-            current_col= self.cols.all[col]
-            u[current_col.txt] = round(getattr(current_col, fun or "mid")(), ndivs) if ndivs else getattr(current_col, fun or "mid")()
-        return u
+        for row in shuffled_rows[:50]:
+            results["print2"].append([row.values[5], row.values[6], row.values[7]])
+
+        sorted_rows = sorted(self.rows, key=lambda row: row.d2h(self))
+        results["print3"].append([sorted_rows[0].values[5], sorted_rows[0].values[6], sorted_rows[0].values[7]]) if sorted_rows else []
+
+        lite = shuffled_rows[:budget0]
+        dark = shuffled_rows[budget0:]
+
+        for i in range(1, budget + 1):
+            if dark:
+                selected_row = random.choice(dark)
+                lite.append(selected_row)
+                dark.remove(selected_row)
+                results["print4"].append([selected_row.values[5], selected_row.values[6], selected_row.values[7]])
+                results["print5"].append([selected_row.values[5], selected_row.values[6], selected_row.values[7]])  # Example logic
+                results["print6"].append([lite[0].values[5], lite[0].values[6], lite[0].values[7]])  # Example logic
+
+        return results
+    def split(self, best, rest, lite, dark):
+        selected = []
+        max_score, todo = -math.inf, None
+        for i, row in enumerate(dark):
+            b = row.like(best)
+            r = row.like(rest)
+            if b > r:
+                selected.append(row)
+            score = (b + r) / abs(b - r + 1E-30)
+            if score > max_score:
+                max_score, todo = score, i
+        return todo, selected

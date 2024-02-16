@@ -1,27 +1,21 @@
-from src.SYM import SYM
-from src.NUM import NUM
+from NUM import NUM
+from SYM import SYM
+
 class COLS:
     def __init__(self, row):
-        self.x, self.y, self.all = {}, {}, []
+        self.x, self.y, self.all = {}, {}, {}
         self.klass = None
-        col=None
-        for at, txt in enumerate(row.cells):
-            col = (NUM if txt[0].isupper() else SYM)()  # Instantiate NUM or SYM directly
-            col.txt = txt
-            col.at = at
-            self.all.append(col)
-            if not txt.endswith('X'):
-                if txt.endswith('!'):
-                    self.klass = col
-                if txt.endswith("!") or txt.endswith("+") or txt.endswith("-"):
-                    self.y[at]=col
-                else:
-                    self.x[at]=col
-        self.names = row.cells
-        
+        for at, txt in enumerate(row):
+            col = NUM(txt, at) if txt[0].isupper() else SYM(txt, at)
+            self.all[at] = col
+            if "!" in txt:
+                self.klass = col
+            if "+" in txt or "-" in txt or "!" in txt:
+                self.y[at] = col
+            else:
+                self.x[at] = col
 
     def add(self, row):
-        for cols in [self.x.values(), self.y.values()]:
-            for col in cols:
-                col.add(row.cells[col.at])
+        for col in self.all.values():
+            col.add(row[col.at])
         return row

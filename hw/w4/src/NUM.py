@@ -1,16 +1,19 @@
+import math
+
 class NUM:
-    def __init__(self, s=None, n=None):
+    def __init__(self, s, n=0):
         self.txt = s or " "
-        self.at = n or 0
+        self.at = n
         self.n = 0
         self.mu = 0
         self.m2 = 0
-        self.hi = -1E30
-        self.lo = 1E30
-        self.heaven = 0 if (s or "").endswith("-$") else 1
+        self.hi = -math.inf
+        self.lo = math.inf
+        self.heaven = 0 if (s or "").endswith("-") else 1
 
     def add(self, x):
         if x != "?":
+            x = float(x)
             self.n += 1
             d = x - self.mu
             self.mu += d / self.n
@@ -22,16 +25,13 @@ class NUM:
         return self.mu
 
     def div(self):
-        return 0 if self.n < 2 else (self.m2 / (self.n - 1))**0.5
-
-    def small(self, the):
-        return the.cohen * self.div()
+        return math.sqrt(self.m2 / (self.n - 1)) if self.n >= 2 else 0
 
     def norm(self, x):
-        return x if x == "?" else (x - self.lo) / (self.hi - self.lo + 1E-30)
+        return (x - self.lo) / (self.hi - self.lo + 1E-30) if x != "?" else x
 
-    def like(self, x):
+    def like(self, x, _=None):
         mu, sd = self.mid(), self.div() + 1E-30
-        nom = 2.718**(-0.5 * (x - mu)**2 / (sd**2))
-        denom = sd * 2.5 + 1E-30
+        nom = math.exp(-0.5 * ((x - mu) ** 2) / (sd ** 2))
+        denom = sd * 2.71828 + 1E-30
         return nom / denom

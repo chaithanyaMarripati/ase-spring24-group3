@@ -1,34 +1,44 @@
 import math
 class ROW:
-    k = 1 
-    def __init__(self, t):
-        self.cells = t
-
+    def __init__(self, values):
+        self.values = values 
     def d2h(self, data):
-        d, n = 0, 0
-        for col in data.cols.y.values():
-            n += 1
-            d += (col.heaven - col.norm(self.cells[col.at]))**2
-        return math.sqrt(d) / math.sqrt(n)
+        distance = 0
+        for col_index in data.cols['y']:  
+            value = self.values[col_index]
+        return distance 
 
-    def likes(self, datas):
-        n, nHypotheses = 0, 0
-        for k, data in datas.items():
-            n += len(data.get("rows", []))
-            nHypotheses += 1
-        most, out = None, None
-        for k, data in datas.items():
-            tmp = self.like(data, n, nHypotheses)
-            if most is None or tmp > most:
-                most, out = tmp, k
-        return out, most
+# import math
 
-    def like(self, data, n, nHypotheses):
-        prior = (len(data.get("rows", [])) + self.k) / (n + self.k * nHypotheses)
-        out = math.log(prior)
-        for _, col in data["cols"]["x"].items():
-            v = self.cells.get(col.at, "?")  # Use get method to handle missing keys
-            if v != "?":
-                inc = col.like(v, prior)
-                out += math.log(inc)
-        return math.exp(1)**out
+# class ROW:
+#     def __init__(self, values):
+#         self.values = values
+
+#     def d2h(self, data):
+#         d, n = 0, 0
+#         for col in data.cols['y']:
+#             # print(col.heaven, col.norm(self.cells[col.at]))
+#             print(data.cols)
+#             n += 1
+#             d += abs(col.heaven - col.norm(self.cells[col.at])) ** 2
+#         return (d ** 0.5) / (n ** 0.5)
+
+    # def d2h(self, data):
+    #     distance = 0
+    #     for col_index in data.cols['y']:
+    #         # Assuming the optimal value ('heaven') for each column is stored in data.heaven[col_index]
+    #         # You might need to adjust this based on how your 'heaven' values are stored
+    #         optimal_value = data.heaven[col_index]
+            
+    #         # Ensure 'value' is a number before comparison
+    #         try:
+    #             value = float(self.values[col_index])
+    #             # Calculate the squared difference between the value and its optimal value
+    #             distance += (value - optimal_value) ** 2
+    #         except ValueError:
+    #             # Handle the case where 'value' cannot be converted to float (e.g., missing or non-numeric data)
+    #             pass
+
+    #     # Return the square root of the average squared difference
+    #     # Adjust the calculation as needed based on your distance metric
+    #     return math.sqrt(distance / len(data.cols['y'])) if data.cols['y'] else 0
