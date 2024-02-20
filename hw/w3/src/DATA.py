@@ -1,42 +1,18 @@
-from collections import namedtuple
-import csv
+from COLS import COLS
+from ROW import ROW
+from utils import csv
 
-from SYM import SYM
-from NUM import NUM
-
-ROW = namedtuple('ROW', 'cells')
-
-class COLS:
-    def __init__(self, row):
-        self.x, self.y, self.all, self.klass, self.names = {}, {}, [], None, row.cells
-        for at, txt in self.names.items():
-            col = (NUM if txt.startswith('A-Z') else SYM)(txt, at)
-            self.all.append(col)
-            if not txt.endswith('X$'):
-                if txt.endswith('!$'):
-                    self.klass = col
-                (self.y if txt.endswith('!$') else self.x)[at] = col
-
-    def add(self, row):
-        for cols in (self.x, self.y):
-            for col in cols.values():
-                col.add(row.cells[col.at])
-        return row
 
 class DATA:
     def __init__(self, src, fun=None):
         self.rows, self.cols = [], None
         if isinstance(src, str):
-            with open(src, 'r') as file:
-                csv_reader = csv.DictReader(file)
-                for row in csv_reader:
-                    self.add(row, fun)
+            csv(src, self.add)
         else:
-            for x in src or []:
-                self.add(x, fun)
+            self.add(src, fun)
 
-    def add(self, t, fun=None):
-        row = t.cells if 'cells' in t else ROW(t)
+    def add(self, r, fun=None):
+        row = r if isinstance(r, ROW) and r.cells else ROW(r)
         if self.cols:
             if fun:
                 fun(self, row)
@@ -58,7 +34,11 @@ class DATA:
 
     def stats(self, cols=None, fun=None, ndivs=None):
         u = {".N": len(self.rows)}
-        for col in (self.cols.y if cols is None else [self.cols.names[c] for c in cols]):
-            u[col.txt] = round(getattr(col, fun or "mid")(), ndivs) if ndivs else getattr(col, fun or "mid")()
-            print(u[col.txt])
-        return {**u,**self.cols.names}
+        for col in self.cols.y if cols is None else [self.cols.names[c] for c in cols]:
+            current_col = self.cols.all[col]
+            u[current_col.txt] = (
+                round(getattr(current_col, fun or "mid")(), ndivs)
+                if ndivs
+                else getattr(current_col, fun or "mid")()
+            )
+        return u
