@@ -20,7 +20,6 @@ def gate20():
             row = ROW(row_data)
             print(row)
             d.add(row)
-        print(d.cols)
         gate_outputs = d.gate(BUDGET0, BUDGET, SOME)
         for key in aggregated_outputs:
             aggregated_outputs[key].extend(gate_outputs[key])
