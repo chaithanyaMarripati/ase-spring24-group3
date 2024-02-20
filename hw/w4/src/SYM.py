@@ -1,35 +1,37 @@
 import math
 
 class SYM:
-    m = 0
-    
-    def __init__(self, s=None, n=None):
+    def __init__(self, s=None, n=0):
         self.txt = s or " "
-        self.at = n or 0
+        self.at = n
         self.n = 0
-        self.has = {} #this is a dictionary to keep track of the frequencies of the symbols
-        self.mode = None #this is the symbol which repeats the most
-        self.most = 0 #this is the frequency of the most repeating symbol
-    
+        self.m = 2
+        self.has = {}
+        self.mode = None
+        self.most = 0
+
     def add(self, x):
         if x != "?":
             self.n += 1
-            self.has[x] = 1+self.has.get(x,0)
+            self.has[x] = 1 + self.has.get(x, 0)
             if self.has[x] > self.most:
                 self.most, self.mode = self.has[x], x
 
-    def mid(self): #mid for symbols is mode itself
+    def mid(self):
         return self.mode
-    
+
     def div(self):
         e = 0
         for v in self.has.values():
-            e -= v / self.n * math.log(v / self.n, 2)
+            p = v / self.n
+            e -= p * math.log(p, 2)
         return e
 
-    def small(self):
-        return 0
+    def like(self, x, prior):
+        return ((self.has.get(x, 0) or 0) + self.m * prior) / (self.n + self.m)
 
-    def like(self, x, prior, the):
-        return ((self.has.get(x, 0) + the.m * prior) / (self.n + the.m))
-
+# Example usage:
+the = {'m': 3}  # You need to define 'the' as a dictionary with the required parameters
+sym_instance = SYM("example", 0)
+sym_instance.add("value")
+print(sym_instance.like("value", 0.5))

@@ -1,19 +1,17 @@
 from pathlib import Path
-import ast 
+def parse_line(line, delimiter=','):
+    return [x.strip() for x in line.split(delimiter)]
 
-def coerce(x):
-   try : return ast.literal_eval(x)
-   except Exception: return x.strip()
-
-
-
-def csv(sFilename, fun):
-    fileDescriptor = Path(sFilename)
-    if fileDescriptor.exists() == False:
-        raise FileNotFoundError()
-    if fileDescriptor.suffix != '.csv':
-        raise Exception("data file should be csv")
-    with open(fileDescriptor.absolute(), 'r', encoding='utf-8') as file:
-            for line in file:
-                row = list(map(coerce, line.strip().split(',')))
-                fun(row)
+def read_csv_to_list(file_path, delimiter=','):
+    data_rows = []
+    file_path = Path(file_path)
+    
+    with file_path.open('r') as file:
+        # Skip the header line if your CSV has headers
+        next(file)
+        for line in file:
+            values = parse_line(line, delimiter)
+            if values:  # Ensure the line is not empty
+                data_rows.append(values)
+    
+    return data_rows
