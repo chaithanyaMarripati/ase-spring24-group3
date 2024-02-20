@@ -14,7 +14,6 @@ class COLS:
                 self.y[at] = col
             else:
                 self.x[at] = col
-
     def add(self, row):
         for col in self.all.values():
             col.add(row[col.at])
