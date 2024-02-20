@@ -1,0 +1,21 @@
+does SMO do better than the random baselines (see prints 1,2,4)?
+Yes, SMO does better than the random baselines (prints 1, 2, and 4) 
+The average values of the prints 1, 2, and 4 
+Average Print1 : 3040.52
+Average Print2 : 3021.06
+Average Print4 : 3019.99
+Average Print5 : 2133.81
+Average Print6 : 2332.72
+The values of the column Lbs- for these prints range form 1700 - 4000 whereas the range for the prints 5 and 6 
+being less variant than the prints 1,2,4 and has less average compared although in print 6 there are cases 
+when few values deviate becoming close to heaven.
+
+how many y row evaluations are required for print 3?
+To determine the best y value, the code iterates through all rows, 
+evaluating them based on the "distance to heaven" metric (d2h). 
+Therefore, the number of evaluations required is equivalent to the total number of rows, which is 398.
+
+how does SMO do compared to absolute best (print 3)?
+The print 3 (absolute best) has values [2130, 24.6, 40] which are close to print where values are around the 
+similar range as of for the print 6 there are values for Lbs- column to have more than 2600 sometimes. 
+So, by this we can say print 5 is less variant compared to print 6 
