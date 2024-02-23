@@ -1,6 +1,6 @@
 from COLS import COLS
 from ROW import ROW
-from utils import csv
+from utils import *
 from config import *
 
 class DATA:
