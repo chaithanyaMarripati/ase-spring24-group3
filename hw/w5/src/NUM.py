@@ -1,4 +1,5 @@
 import math
+from config import *
 
 class NUM:
     def __init__(self, s=None, n=None):
