@@ -1,28 +1,5 @@
 from DATA import DATA
-import math
-
-def o(t, n=None, u=None):
-    if isinstance(t, (int, float)):
-        return str(rounding(t, n))
-    if not isinstance(t, dict):
-        return str(t)
-    if u is None:
-        u = []
-    for k in t.keys():
-        if str(k)[0] != "_":
-            if len(t) > 0:
-                u.append(o(t[k], n))
-            else:
-                u.append(f"{o(k, n)}: {o(t[k], n)}")
-    return "{" + ", ".join(u) + "}"
-
-def rounding(n, ndecs=None):
-    if not isinstance(n, (int, float)):
-        return n
-    if math.floor(n) == n:
-        return n
-    mult = 10**(ndecs or 2)
-    return math.floor(n * mult + 0.5) / mult
+from utils import *
 
 
 def calculateCentroid(node):
@@ -53,7 +30,7 @@ def doubletap():
 
     for index, row in enumerate(rows):
         if index%30 == 0:
-            print(index+1,o(row.cells),rnd(row.dist(r1,data)))
+            print(index+1,o(row.cells),rounding(row.dist(r1,data)))
     
     print("\n\n---------PART2----------")
     att = 1
@@ -68,6 +45,6 @@ def doubletap():
 
     cluster_result = data.cluster(data.rows)
 
-    leaf_centroids = calculate_centroid(cluster_result)
-    print_leaf_centroids(leaf_centroids) 
+    leaf_centroids = calculateCentroid(cluster_result)
+    printLeafCentroids(leaf_centroids) 
 
