@@ -1,6 +1,6 @@
 from pathlib import Path
 import ast
-
+import math
 
 def coerce(x):
     try:
@@ -8,6 +8,16 @@ def coerce(x):
     except Exception:
         return x.strip()
 
+def many(t,n):
+    u=[]
+    for _ in range(1,n+1):
+        u.append(any(t))
+    return u
+
+def cosine(a,b,c):
+    den = 1 if c == 0 else 2*c
+    x1 = (a**2 + c**2 - b**2) / den
+    return x1
 
 def csv(sFilename, fun):
     fileDescriptor = Path(sFilename)
