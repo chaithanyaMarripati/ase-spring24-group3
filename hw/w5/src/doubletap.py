@@ -32,7 +32,6 @@ def doubletap():
     for index, row in enumerate(rows):
         if index%30 == 0:
             print(index+1,o(row.cells),rounding(row.dist(r1,data)))
-    exit(0)
 
     print("\n\n---------PART2----------")
     att = 1
@@ -44,7 +43,6 @@ def doubletap():
 
     print(f'far1: {o(a.cells)},\nfar2: {o(b.cells)}')
     print(f'distance = {distance}')
-
     cluster_result = data.cluster(data.rows)
 
     leaf_centroids = calculateCentroid(cluster_result)
