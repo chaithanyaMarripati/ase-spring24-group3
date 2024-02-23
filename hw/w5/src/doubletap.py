@@ -43,10 +43,10 @@ def doubletap():
 
     print(f'far1: {o(a.cells)},\nfar2: {o(b.cells)}')
     print(f'distance = {distance}')
-    cluster_result = data.cluster(data.rows)
+    #cluster_result = data.cluster(data.rows)
 
-    leaf_centroids = calculateCentroid(cluster_result)
-    printLeafCentroids(leaf_centroids) 
+    #leaf_centroids = calculateCentroid(cluster_result)
+    #printLeafCentroids(leaf_centroids) 
 
 
 if __name__ == '__main__':
