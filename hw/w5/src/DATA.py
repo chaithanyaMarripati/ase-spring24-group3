@@ -2,6 +2,7 @@ from COLS import COLS
 from ROW import ROW
 from utils import *
 from config import *
+from operator import itemgetter
 
 class DATA:
     def __init__(self, src, fun=None):
@@ -42,6 +43,13 @@ class DATA:
                 else getattr(current_col, fun or "mid")()
             )
         return u
+   
+    def dist(self, row1, row2, cols = None):
+        n,d = 0,0
+        for index in cols or self.cols.x:
+            n = n + 1
+            d = d + cols[index].dist(row1.cells[index], row2.cells[index])**the['p']
+        return (d/n)**(1/the['p'])
 
     def half(self, rows = None, cols = None, above = None):
         def gap(row1,row2): 
@@ -50,11 +58,11 @@ class DATA:
             return {'row' : row, 'dist' : cosine(gap(row,A), gap(row,B), c)}
         rows = rows or self.rows
         some = many(rows,the['Half'])
-        A    = above if above and the['Reuse'] else any(some)
+        A    = above if above and the.get('Reuse',0) else any(some)
         def function(r):
             return {'row' : r, 'dist' : gap(r, A)}
         tmp = sorted(list(map(function, some)), key=itemgetter('dist'))
-        far = tmp[int(the['Far'] * len(rows))//1]
+        far = tmp[int(the['Far'] * len(tmp))//1]
         B    = far['row']
         c    = far['dist']
         left, right = [], []
@@ -63,7 +71,7 @@ class DATA:
                 left.append(tmp['row'])
             else:
                 right.append(tmp['row'])
-        evals = 1 if the['Reuse'] and above else 2
+        evals = 1 if the.get('Reuse',0) and above else 2
         return left, right, A, B, c, evals
 
     def clone(self, init = {}):

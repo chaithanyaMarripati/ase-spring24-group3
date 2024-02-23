@@ -1,8 +1,5 @@
 from pathlib import Path
-import ast
-import math
-import random
-
+import ast,sys,math,random,re
 def coerce(x):
     try:
         return ast.literal_eval(x)
@@ -57,3 +54,16 @@ def many(t,n):
     for _ in range(1,n+1):
         u.append(any(t))
     return u
+
+def settings(s):
+    pat = r"[-][-]([\S]+)[^\n]+= ([\S]+)"
+    return dict(re.findall(pat, s))
+
+def cli(options):
+    args = sys.argv[1:]
+    for k, v in options.items():
+        for n, x in enumerate(args):
+            if x == '-' + k[0] or x == '--' + k:
+                v = 'true' if v == 'false' else 'false' if v == 'true' else args[n + 1]
+        options[k] = coerce(v)
+    return options

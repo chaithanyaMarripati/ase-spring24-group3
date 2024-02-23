@@ -6,6 +6,8 @@ class COLS:
     def __init__(self, row):
         self.x, self.y, self.all = {}, {}, []
         self.klass, col = None, None
+        if len(row.cells) == 1:
+            row.cells = row.cells[0]
         for at, txt in enumerate(row.cells):
             col = (NUM if txt[0].isupper() else SYM)(
                 txt, at
