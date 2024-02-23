@@ -50,3 +50,15 @@ class NUM:
     def bin(self, x):
         tmp = (self.hi - self.lo) / (the.bins - 1)
         return 1 if self.hi == self.lo else math.floor(x / tmp + 0.5) * tmp
+
+    def dist(self, x, y):
+        if x == "?" and y == "?":
+            return 1
+        x, y = self.norm(x), self.norm(y)
+        
+        if x == "?":
+            x = 1 if y < 0.5 else 0
+        if y == "?":
+            y = 1 if x < 0.5 else 0
+        
+        return abs(x - y)

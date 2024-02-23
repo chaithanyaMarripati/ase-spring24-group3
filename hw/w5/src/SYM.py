@@ -36,3 +36,6 @@ class SYM:
         if self.n + the["m"] == 0:
             return 0
         return (self.has.get(x, 0) + the["m"] * prior) / (self.n + the["m"])
+
+    def dist(self, x, y):
+        return 1 if x == "?" and y == "?" else 0 if x == y else 1

@@ -43,6 +43,34 @@ class DATA:
             )
         return u
 
+    def half(self, rows = None, cols = None, above = None):
+        def gap(row1,row2): 
+            return self.dist(row1,row2,cols)
+        def project(row):
+            return {'row' : row, 'dist' : cosine(gap(row,A), gap(row,B), c)}
+        rows = rows or self.rows
+        some = many(rows,the['Half'])
+        A    = above if above and the['Reuse'] else any(some)
+        def function(r):
+            return {'row' : r, 'dist' : gap(r, A)}
+        tmp = sorted(list(map(function, some)), key=itemgetter('dist'))
+        far = tmp[int(the['Far'] * len(rows))//1]
+        B    = far['row']
+        c    = far['dist']
+        left, right = [], []
+        for n,tmp in enumerate(sorted(list(map(project, rows)), key=itemgetter('dist'))):
+            if n < len(rows)//2:
+                left.append(tmp['row'])
+            else:
+                right.append(tmp['row'])
+        evals = 1 if the['Reuse'] and above else 2
+        return left, right, A, B, c, evals
+
+    def clone(self, init = {}):
+        data = DATA([self.cols.names])
+        _ = list(map(data.add, init))
+        return data
+
 
     def farapart(self, data, a=None, sortp=False):
             rows = data.rows or self.rows

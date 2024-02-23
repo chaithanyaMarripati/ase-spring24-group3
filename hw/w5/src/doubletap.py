@@ -1,6 +1,6 @@
 from DATA import DATA
 from utils import *
-
+from config import *
 
 def calculateCentroid(node):
     if 'left' not in node and 'right' not in node:
@@ -24,14 +24,16 @@ def printLeafCentroids(node):
 
 def doubletap():
     data = DATA("../data/auto93.csv")
+    the['p']=2
     print("---------PART1----------")
     r1 = data.rows[0]
-    rows = r1.negihbors(data)
+    rows = r1.neighbors(data)
 
     for index, row in enumerate(rows):
         if index%30 == 0:
             print(index+1,o(row.cells),rounding(row.dist(r1,data)))
-    
+    exit(0)
+
     print("\n\n---------PART2----------")
     att = 1
     a, b, distance = data.farapart(data)
@@ -48,3 +50,6 @@ def doubletap():
     leaf_centroids = calculateCentroid(cluster_result)
     printLeafCentroids(leaf_centroids) 
 
+
+if __name__ == '__main__':
+    doubletap()
