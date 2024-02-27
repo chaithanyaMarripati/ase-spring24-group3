@@ -32,7 +32,7 @@ def doubletap():
 
     for index, row in enumerate(rows):
         if index%30 == 0:
-            print(index+1,o(row.cells),rounding(row.dist(r1,data)))
+            print(index+1,modifyValues(row.cells),rounding(row.dist(r1,data)))
 
     print("\n\n---------PART2----------")
     att = 1
@@ -41,7 +41,7 @@ def doubletap():
         a, b, distance = data.farapart(data)
         att += 1
 
-    print(f'far1: {o(a.cells)},\nfar2: {o(b.cells)}')
+    print(f'far1: {modifyValues(a.cells)},\nfar2: {modifyValues(b.cells)}')
     print(f'distance = {distance}')
 
     cluster_result = data.cluster(data.rows)

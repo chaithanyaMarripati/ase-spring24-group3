@@ -18,7 +18,7 @@ def csv(sFilename, fun):
             fun(row)
 
 
-def o(t, n=None, u=None):
+def modifyValues(t, n=None, u=None):
     if isinstance(t, (int, float)):
         return str(rounding(t, n))
     if not isinstance(t, dict):
@@ -44,7 +44,7 @@ def rounding(n, ndecs=None):
 def any(t):
     return t[random.randint(0, len(t) - 1)]
 
-def cosine(a,b,c):
+def cos(a,b,c):
     den = 1 if c == 0 else 2*c
     x1 = (a**2 + c**2 - b**2) / den
     return x1

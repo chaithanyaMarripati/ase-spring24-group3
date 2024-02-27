@@ -55,7 +55,7 @@ class DATA:
         def gap(row1,row2): 
             return self.dist(row1,row2,cols)
         def project(row):
-            return {'row' : row, 'dist' : cosine(gap(row,A), gap(row,B), c)}
+            return {'row' : row, 'dist' : cos(gap(row,A), gap(row,B), c)}
         rows = rows or self.rows
         some = many(rows,the['Half'])
         A    = above if above and the.get('Reuse',0) else any(some)
