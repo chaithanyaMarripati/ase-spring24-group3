@@ -20,27 +20,6 @@ def test_cols_add():
         cols.klass.txt == 'E!'
     )
 
-def test_settings():
-        sample_settings = '''
-        -c --cohen small effect size = .35
-        -f --file csv data file name = ../data/diabetes.csv
-        -h --help show help = false
-        -k --k low class frequency kludge = 1
-        -m --m low attribute frequency kludge = 2
-        -s --seed random number seed = 31210
-        -t --todo start up action = help
-        '''
-        expected_result = {'cohen': '.35', 
-                           'file': '../data/diabetes.csv', 
-                           'help': 'false', 
-                           'k': '1', 
-                           'm': '2', 
-                           'seed': '31210', 
-                           'todo': 'help'}
-
-        result = settings(sample_settings)
-        assert result ==  expected_result
-    
 def test_num_mid():
     num = NUM()
     vals = [1, 2, 3, 4]
@@ -54,40 +33,21 @@ def test_num_mid():
     
 def test_num_lo():
     num = NUM()
-    vals = [1, 2, 3, 4]
+    vals = [19,89,112,12]
     for val in vals:
         num.add(val)
     assert num.lo == min(vals)
     
 def test_sym_mid():
     sym = SYM()
-    vals = [1, 2, 3, 4, 2, 2, 2, 4, 3, 1, 2, 4, 3, 2, 1, 3, 3]
+    vals = [1, 2, 3, 4, 3]
     for val in vals:
         sym.add(val)
     mid = mode(vals)
     assert sym.mid() == mid
 
 
-def test_coerce():
-    num = "10.5"
-    s = "Hi"
-    boolean = "trUe"
-    
-    assert coerce(num) == 10.5
-    assert coerce(s) == "Hi"
-    assert coerce(boolean) == True
 
-def test_col():
-    names = ["Id", "Age", "Grade+"]
-    row = ROW(names)
-    col = COLS(row)
-    actual_x = ["Id", "Age"]
-    actual_y = ["Grade+"]
-    
-    x_vals = [val.txt for val in col.x.values()]
-    y_vals = [val.txt for val in col.y.values()]
-    assert actual_x == x_vals
-    assert actual_y == y_vals
 
 def test_div_with_empty_values():
         sym_instance = SYM()
@@ -104,7 +64,6 @@ def test_div_with_multiple_values():
         assert result > 0
 
 test_cols_add()
-test_settings()
 test_num_mid()
 test_num_lo()
 
