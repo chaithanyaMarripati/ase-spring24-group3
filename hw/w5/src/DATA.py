@@ -3,8 +3,11 @@ from ROW import ROW
 from utils import *
 from config import *
 from operator import itemgetter
+from node_module import NODE
+import config
 
 class DATA:
+
     def __init__(self, src, fun=None):
         self.rows, self.cols = [], None
         if isinstance(src, str):
@@ -51,29 +54,6 @@ class DATA:
             d = d + cols[index].dist(row1.cells[index], row2.cells[index])**the['p']
         return (d/n)**(1/the['p'])
 
-    def half(self, rows = None, cols = None, above = None):
-        def gap(row1,row2): 
-            return self.dist(row1,row2,cols)
-        def project(row):
-            return {'row' : row, 'dist' : cos(gap(row,A), gap(row,B), c)}
-        rows = rows or self.rows
-        some = many(rows,the['Half'])
-        A    = above if above and the.get('Reuse',0) else any(some)
-        def function(r):
-            return {'row' : r, 'dist' : gap(r, A)}
-        tmp = sorted(list(map(function, some)), key=itemgetter('dist'))
-        far = tmp[int(the['Far'] * len(tmp))//1]
-        B    = far['row']
-        c    = far['dist']
-        left, right = [], []
-        for n,tmp in enumerate(sorted(list(map(project, rows)), key=itemgetter('dist'))):
-            if n < len(rows)//2:
-                left.append(tmp['row'])
-            else:
-                right.append(tmp['row'])
-        evals = 1 if the.get('Reuse',0) and above else 2
-        return left, right, A, B, c, evals
-
     def clone(self, init = {}):
         data = DATA([self.cols.names])
         _ = list(map(data.add, init))
@@ -81,14 +61,17 @@ class DATA:
 
 
     def farapart(self, data, a=None, sortp=False):
-            rows = data.rows or self.rows
+            if isinstance(data,list):
+                rows = data
+            else:
+                rows = data.rows or self.rows
             far = int(len(rows) * the.get("Far", 0.95))
             evals = 1 if a else 2
             a = a or any(rows).neighbors(self, rows)[far]
             b = a.neighbors(self, rows)[far]
             if sortp and b.d2h(self) < a.d2h(self):
                 a,b=b,a
-            return a, b, a.dist(b,self)
+            return a, b, a.dist(b,self),evals
 
     def cluster(self, rows = None , min = None, cols = None, above = None):
         rows = rows or self.rows
@@ -100,4 +83,56 @@ class DATA:
             node['left']  = self.cluster(left,  min, cols, node['A'])
             node['right'] = self.cluster(right, min, cols, node['B'])
         return node
+    
+    def half(self, rows, sortp = False, before = None, evals = None):
+        evals = evals or 0
+        some = many(rows, min(the['Half'], len(rows)))
+        a, b, C, evals = self.farapart(some, before, sortp)
+
+        def d(row1, row2):
+            return row1.dist(row2, self)
+
+        def project(r):
+            return (d(r, a)**2 + C**2 - d(r, b)**2) / (2 * C)
+
+        sorted_rows = sorted(rows, key=project)
+        
+        mid_index = len(sorted_rows) // 2
+        as_ = sorted_rows[:mid_index]
+        bs = sorted_rows[mid_index:]
+
+        return as_, bs, a, b, C, d(a, bs[0]), evals
+    
+    def tree(self, sortp = False):
+        evals = 0
+        def _tree(data, above=None, lefts=None, rights=None, node=None):
+            nonlocal evals
+            node = NODE(data)
+
+            if len(data.rows) > 2 * (len(self.rows) ** 0.5):
+                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
+                evals += evals1
+                node.lefts = _tree(self.clone(lefts), node.left)
+                node.rights = _tree(self.clone(rights), node.right)
+
+            return node
+
+        return _tree(self), evals
+    
+    def branch(self, stop=None):
+        evals, rest = 1, []
+        stop = stop or (2 * (len(self.rows) ** 0.5))
+
+        def _branch(data, above=None, left=None, lefts=None, rights=None):
+            nonlocal evals, rest
+            if len(data.rows) > stop:
+                lefts, rights, left, _, _, _, _ = self.half(data.rows, True, above)
+                evals += 1
+                rest.extend(rights)
+                return _branch(self.clone(lefts), left)
+            else:
+                return self.clone(data.rows), self.clone(rest), evals
+
+        return _branch(self)
+
 

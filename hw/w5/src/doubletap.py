@@ -1,6 +1,7 @@
 from DATA import DATA
 from utils import *
 from config import *
+
 def getCliValues():
     for key, value in cli(settings(help)).items():
         the[key] = value
@@ -48,6 +49,8 @@ def doubletap():
     #print(cluster_result)
     leaf_centroids = calculateCentroid(cluster_result)
     #printLeafCentroids(leaf_centroids) 
+
+
 
 
 if __name__ == '__main__':

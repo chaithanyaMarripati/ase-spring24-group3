@@ -67,3 +67,13 @@ def cli(options):
                 v = 'true' if v == 'false' else 'false' if v == 'true' else args[n + 1]
         options[k] = coerce(v)
     return options
+
+def rnd(n, ndecs=None):
+    if type(n) != float:
+        return n
+
+    if math.floor(n) == n:
+        return n
+
+    mult = 10**(ndecs or 2)
+    return math.floor(n * mult + 0.5) / mult
