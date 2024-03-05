@@ -25,12 +25,12 @@ class NODE:
 
         def _show(node, depth, leafp):
             nonlocal maxDepth
-            post = leafp and (str(d2h(node.data)) + "\t" + str(o(node.data.mid().cells))) or ""
+            post = leafp and (str(d2h(node.data)) + "\t" + str(modifyValues(node.data.mid().cells))) or ""
             maxDepth = max(maxDepth, depth)
             print(('|.. ' * depth) + post)
 
         self.walk(_show)
         print("")
-        print(("    " * maxDepth) + str(d2h(self.data)) , o(self.data.mid().cells))
-        print(("    " * maxDepth) + "_" + "\t" + o(self.data.cols.names))
+        print(("    " * maxDepth) + str(d2h(self.data)) , modifyValues(self.data.mid().cells))
+        print(("    " * maxDepth) + "_" + "\t" + modifyValues(self.data.cols.names))
 
