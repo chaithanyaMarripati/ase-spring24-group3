@@ -19,7 +19,7 @@ class NODE:
 
     def show(self):
         def d2h(data):
-            return rnd(data.mid().d2h(self.here))
+            return rnd(data.mid().d2h(self.data))
 
         maxDepth = 0
 

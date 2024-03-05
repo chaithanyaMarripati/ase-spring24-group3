@@ -61,14 +61,17 @@ class DATA:
 
 
     def farapart(self, data, a=None, sortp=False):
-            rows = data.rows or self.rows
+            if isinstance(data,list):
+                rows = data
+            else:
+                rows = data.rows or self.rows
             far = int(len(rows) * the.get("Far", 0.95))
             evals = 1 if a else 2
             a = a or any(rows).neighbors(self, rows)[far]
             b = a.neighbors(self, rows)[far]
             if sortp and b.d2h(self) < a.d2h(self):
                 a,b=b,a
-            return a, b, a.dist(b,self)
+            return a, b, a.dist(b,self),evals
 
     def cluster(self, rows = None , min = None, cols = None, above = None):
         rows = rows or self.rows

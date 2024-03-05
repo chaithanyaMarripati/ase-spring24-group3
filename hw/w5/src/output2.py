@@ -2,7 +2,9 @@ from DATA import DATA
 from utils import *
 from config import *
 
-data = DATA('./data/auto93.csv')
+the['Half']=256
+the['p']=2
+data = DATA('../data/auto93.csv')
 print("--------TREE--------")
 node, evals = data.tree(True)
 node.show()
