@@ -1,3 +1,6 @@
+from config import *
+import math
+
 class SYM:
     def __init__(self, s=None, n=None):
         self.txt = s or " "
@@ -18,9 +21,14 @@ class SYM:
         return self.mode
 
     def div(self):
-        # Assuming l.entropy is defined elsewhere
-        return l.entropy(self.has)
-
+        e = 0
+        for v in self.has.values():
+            e -= v / self.n * math.log(v / self.n, 2)
+        return e
+   
+    def like(self, x, prior):
+        return ((self.has.get(x, 0) or 0) + the['m'] * prior) / (self.n + the['m'])
+    
     def small(self):
         return 0
 

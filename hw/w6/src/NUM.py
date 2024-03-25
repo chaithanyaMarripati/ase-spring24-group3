@@ -1,4 +1,5 @@
 import math
+from config import the
 
 class NUM:
     def __init__(self, s=None, n=None):
@@ -19,7 +20,12 @@ class NUM:
             self.m2 += d * (x - self.mu)
             self.lo = min(x, self.lo)
             self.hi = max(x, self.hi)
-
+    def like(self, x, _):
+        mu, sd = self.mid(), self.div() + 1E-30
+        nom = 2.718**(-0.5*(x-mu)**2/(sd**2))
+        denom = sd*2.5 + 1E-30
+        return nom/denom
+    
     def mid(self):
         return self.mu
 
@@ -27,7 +33,7 @@ class NUM:
         return 0 if self.n < 2 else math.sqrt(self.m2 / (self.n - 1))
 
     def small(self):
-        return the.cohen * self.div()
+        return the.get('cohen',0.35) * self.div()
 
     def norm(self, x):
         return x if x == "?" else (x - self.lo) / (self.hi - self.lo + 1E-30)
