@@ -48,7 +48,7 @@ class NUM:
         return abs(x - y)
 
     def bin(self, x):
-        tmp = (self.hi - self.lo) / (the.bins - 1)
+        tmp = (self.hi - self.lo) / (the.get('bins',16) - 1)
         return 1 if self.hi == self.lo else math.floor(x / tmp + 0.5) * tmp
 
     def dist(self, x, y):

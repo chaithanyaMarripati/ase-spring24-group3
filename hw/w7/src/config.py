@@ -18,3 +18,6 @@ help = '''USAGE: python main.py [OPTIONS]
   -S --Support coeffecient on best            = 2
   -t --todo   start up action                 = help
    '''
+
+egs = {}
+Seed = 787878

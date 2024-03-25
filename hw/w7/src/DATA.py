@@ -2,12 +2,8 @@ from COLS import COLS
 from ROW import ROW
 from utils import *
 from config import *
-from operator import itemgetter
-from node_module import NODE
-import config
 
 class DATA:
-
     def __init__(self, src, fun=None):
         self.rows, self.cols = [], None
         if isinstance(src, str):
@@ -47,12 +43,47 @@ class DATA:
             )
         return u
    
+    def shuffle(self, items):
+        return random.sample(items, len(items)) 
+
+    def distance2heaven(self, row, heaven):
+        norm = lambda c, x: (x - c.lo) / (c.hi - c.lo)
+        return math.sqrt(sum((heaven - norm(col, row.cells[y]))**2 for y, col in self.cols.y.items()) / len(self.cols.y))
+   
+    def gate(self, budget0, budget, some):
+        heaven = 1.0
+        rows = self.shuffle(self.rows)
+        print("1. top6", [[row.cells[x] for x in self.cols.y.keys()] for row in rows[:6]])
+        print("2. top50", [[row.cells[x] for x in self.cols.y.keys()] for row in rows[:50]])
+
+        rows.sort(key=lambda row: self.distance2heaven(row, heaven))
+        print("3. most", [rows[0].cells[x] for x in list(self.cols.y.keys())])
+
+        rows = self.shuffle(self.rows)
+        lite = rows[:budget0]
+        dark = rows[budget0:]
+
+        for _ in range(budget):
+            lite.sort(key=lambda row: self.distance2heaven(row, heaven))
+            n = int(len(lite)**some)
+            best, rest = lite[:n], lite[n:]
+            todo, selected = self.split(best, rest, lite, dark)
+            
+            dark_sample = random.sample(dark, budget0+1)
+            print("4: rand", [dark_sample[len(dark_sample)//2].cells[x] for x in self.cols.y.keys()])
+            if len(selected.rows) > 0:
+                print("5: mid", [selected.rows[len(selected.rows)//2].cells[x] for x in self.cols.y.keys()])
+            print("6: top", [best[0].cells[x] for x in self.cols.y.keys()])
+            
+            lite.append(dark.pop(todo))
+    
     def dist(self, row1, row2, cols = None):
         n,d = 0,0
         for index in cols or self.cols.x:
             n = n + 1
             d = d + cols[index].dist(row1.cells[index], row2.cells[index])**the['p']
         return (d/n)**(1/the['p'])
+
 
     def clone(self, init = {}):
         data = DATA([self.cols.names])
@@ -103,22 +134,7 @@ class DATA:
 
         return as_, bs, a, b, C, d(a, bs[0]), evals
     
-    def tree(self, sortp = False):
-        evals = 0
-        def _tree(data, above=None, lefts=None, rights=None, node=None):
-            nonlocal evals
-            node = NODE(data)
-
-            if len(data.rows) > 2 * (len(self.rows) ** 0.5):
-                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
-                evals += evals1
-                node.lefts = _tree(self.clone(lefts), node.left)
-                node.rights = _tree(self.clone(rights), node.right)
-
-            return node
-
-        return _tree(self), evals
-    
+       
     def branch(self, stop=None):
         evals, rest = 1, []
         stop = stop or (2 * (len(self.rows) ** 0.5))

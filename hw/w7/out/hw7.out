@@ -1,0 +1,30 @@
+OUTPUT 1:
+
+{ at: 0, scored: 0.0, txt: Clndrs, x: {'hi': 6, 'lo': -inf}, y: {'HATE': 72} }
+{ at: 0, scored: 0.0, txt: Clndrs, x: {'hi': inf, 'lo': 6}, y: {'LIKE': 24} }
+
+{ at: 1, scored: 0.0, txt: Volume, x: {'hi': 163, 'lo': -inf}, y: {'HATE': 71} }
+{ at: 1, scored: 0.0, txt: Volume, x: {'hi': 390, 'lo': 163}, y: {'HATE': 1, 'LIKE': 8} }
+{ at: 1, scored: 0.0, txt: Volume, x: {'hi': inf, 'lo': 390}, y: {'LIKE': 16} }
+
+{ at: 3, scored: 0.0, txt: Model, x: {'hi': 70, 'lo': -inf}, y: {'LIKE': 11, 'HATE': 4} }
+{ at: 3, scored: 0.0, txt: Model, x: {'hi': 71, 'lo': 70}, y: {'LIKE': 6, 'HATE': 4} }
+{ at: 3, scored: 0.0, txt: Model, x: {'hi': 72, 'lo': 71}, y: {'LIKE': 3, 'HATE': 5} }
+{ at: 3, scored: 0.0, txt: Model, x: {'hi': 74, 'lo': 72}, y: {'LIKE': 4, 'HATE': 12} }
+{ at: 3, scored: 0.0, txt: Model, x: {'hi': inf, 'lo': 74}, y: {'HATE': 47} }
+
+{ at: 4, scored: 0.0, txt: origin, x: {'hi': 1, 'lo': 1}, y: {'LIKE': 24, 'HATE': 41} }
+{ at: 4, scored: 0.0, txt: origin, x: {'hi': 2, 'lo': 2}, y: {'HATE': 30} }
+{ at: 4, scored: 0.0, txt: origin, x: {'hi': 3, 'lo': 3}, y: {'HATE': 1} }
+
+OUTPUT 2:
+
+#scores:
+
+1.0 { at: 0, scored: 0.0, txt: Clndrs, x: {'hi': inf, 'lo': 6}, y: {'LIKE': 24} }
+0.67 { at: 1, scored: 0.0, txt: Volume, x: {'hi': inf, 'lo': 390}, y: {'LIKE': 16} }
+0.64 { at: 4, scored: 0.0, txt: origin, x: {'hi': 1, 'lo': 1}, y: {'LIKE': 24, 'HATE': 41} }
+0.41 { at: 3, scored: 0.0, txt: Model, x: {'hi': 70, 'lo': -inf}, y: {'LIKE': 11, 'HATE': 4} }
+0.32 { at: 1, scored: 0.0, txt: Volume, x: {'hi': 390, 'lo': 163}, y: {'HATE': 1, 'LIKE': 8} }
+0.2 { at: 3, scored: 0.0, txt: Model, x: {'hi': 71, 'lo': 70}, y: {'LIKE': 6, 'HATE': 4} }
+{'LIKE': 24, 'HATE': 72}
