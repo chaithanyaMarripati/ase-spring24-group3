@@ -1,5 +1,9 @@
 from pathlib import Path
 import ast,sys,math,random,re
+from config import *
+import math
+import random
+
 def coerce(x):
     try:
         return ast.literal_eval(x)
@@ -41,6 +45,21 @@ def rounding(n, ndecs=None):
     mult = 10**(ndecs or 2)
     return math.floor(n * mult + 0.5) / mult
 
+def o(t, n=None, u=None):
+    if isinstance(t, (int, float)):
+        return str(rnd(t, n))
+    if not isinstance(t, dict):
+        return str(t)
+    if u is None:
+        u = []
+    for k in t.keys():
+        if str(k)[0] != "_":
+            if len(t) > 0:
+                u.append(o(t[k], n))
+            else:
+                u.append(f"{o(k, n)}: {o(t[k], n)}")
+    return "{" + ", ".join(u) + "}"
+
 def any(t):
     return t[random.randint(0, len(t) - 1)]
 
@@ -77,3 +96,36 @@ def rnd(n, ndecs=None):
 
     mult = 10**(ndecs or 2)
     return math.floor(n * mult + 0.5) / mult
+
+def powerset(s):
+        t = [[]]
+        for i in range(len(s)):
+            for j in range(len(t)):
+                t.append([s[i]] + t[j])
+        return t
+
+def shuffle(t):
+    u = list(t)
+    for i in range(len(u) -1, 1, -1):
+        j=random.randint(0, i)
+        u[i], u[j] = u[j], u[i]
+    return u
+
+def entropy(t):
+    n = sum(t.values())
+    e = 0
+    for v in t.values():
+        e -= (v / n) * math.log2(v / n)
+    return e, n
+
+def score(t, goal, LIKE, HATE):
+    like, hate, tiny = 0, 0, 1e-30
+    for klass, n in t.items():
+        if klass == goal:
+            like += n
+        else:
+            hate += n
+    if like == 0 and hate == 0:
+        return 0  # Return 0 if both like and hate are zero
+    like, hate = like / (LIKE + tiny), hate / (HATE + tiny)
+    return 0 if hate > like else (like ** the.get("Support")) / (like + hate)

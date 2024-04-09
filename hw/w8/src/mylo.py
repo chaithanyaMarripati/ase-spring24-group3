@@ -1,11 +1,11 @@
 from DATA import DATA
 from utils import *
 from config import *
-from range import RANGE
+from ranges import RANGE
+from eg_rules import rules
 
 def main():
     saved_options = {}
-
     for key, value in cli(settings(help)).items():
         the[key] = value
         saved_options[key] = value
@@ -106,4 +106,6 @@ class mylo:
 
 if __name__ == '__main__':
     main()
-    mylo().bins()
+    #mylo().bins()
+    # mylo().rule()
+    rules()
