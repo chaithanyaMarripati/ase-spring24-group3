@@ -150,5 +150,3 @@ class DATA:
                 return self.clone(data.rows), self.clone(rest), evals
 
         return _branch(self)
-
-

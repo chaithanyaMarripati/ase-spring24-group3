@@ -2,6 +2,7 @@ from DATA import DATA
 from utils import *
 from config import *
 from range import RANGE
+from eg_rules import rules
 
 def main():
     saved_options = {}
@@ -106,4 +107,5 @@ class mylo:
 
 if __name__ == '__main__':
     main()
-    mylo().bins()
+    #mylo().bins()
+    mylo().rule()

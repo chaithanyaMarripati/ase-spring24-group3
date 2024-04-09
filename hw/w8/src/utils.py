@@ -41,6 +41,21 @@ def rounding(n, ndecs=None):
     mult = 10**(ndecs or 2)
     return math.floor(n * mult + 0.5) / mult
 
+def o(t, n=None, u=None):
+    if isinstance(t, (int, float)):
+        return str(rnd(t, n))
+    if not isinstance(t, dict):
+        return str(t)
+    if u is None:
+        u = []
+    for k in t.keys():
+        if str(k)[0] != "_":
+            if len(t) > 0:
+                u.append(o(t[k], n))
+            else:
+                u.append(f"{o(k, n)}: {o(t[k], n)}")
+    return "{" + ", ".join(u) + "}"
+
 def any(t):
     return t[random.randint(0, len(t) - 1)]
 
@@ -77,3 +92,10 @@ def rnd(n, ndecs=None):
 
     mult = 10**(ndecs or 2)
     return math.floor(n * mult + 0.5) / mult
+
+def powerset(s):
+        t = [[]]
+        for i in range(len(s)):
+            for j in range(len(t)):
+                t.append([s[i]] + t[j])
+        return t
