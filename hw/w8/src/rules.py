@@ -1,4 +1,4 @@
-from eg_rules import rules   
+# from eg_rules import eg_rules   
 from utils import *
 from config import *
 
